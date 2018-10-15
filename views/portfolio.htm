@@ -1,0 +1,49 @@
+<script>
+
+</script>
+<br>
+
+<div style="text-align:center">
+<nav class="navbar navbar-dark bg-dark" style="color: white;">
+        <!-- Navbar content -->
+        <span style="font-size: 20px;">Portfolio</span>
+</nav>
+</div>
+<div ng-controller="portfolioController">
+<div style="float:right"></div>
+<button style="width:100%;display:block;" ng-click="refresh()" class="btn btn-danger">Refresh</button>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+                <th>Ticker</th>
+                <th>Purchase Amount</th>  
+                <th>Shares</th>
+                <th>Current_Price</th>
+                <th>Gain</th>
+                <th>Value</th>
+
+                <th>Gain %</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="so in portfolioDataPush">
+            <td>{{so.name}}</td>
+            <td>{{so.sharePrice | currency}}</td>
+            <td>{{so.shares}}</td>
+            <td>{{so.stockPrices | currency}}</td>
+            <td>{{so.stockPrices*so.shares - so.shares*so.sharePrice | currency}}</td>
+            <td>{{so.stockPrices*so.shares |  currency}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<br>
+
+<!-- <div style="text-align:center;width: 100%;height: 90px;padding: 10px;border: 4px dotted #aaaaaa;" ondrop="drop(event)" ondragover="allowDrop(event)">Drop the CSV File into the area to import NEW data</div> -->
+
+<div id="drop_zone" style="text-align:center;width: 100%;height: 90px;padding: 10px;border: 4px dotted #aaaaaa;" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+        <p>Drag one or more files to this Drop Zone ...</p>
+</div>
+
+<output id="list"></output>
+<br>

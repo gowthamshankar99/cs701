@@ -1,0 +1,22 @@
+<br>
+
+<div style="text-align:center">
+<nav class="navbar navbar-dark bg-dark" style="color: white;">
+        <!-- Navbar content -->
+        Show Graphs!
+</nav>
+<br>
+</div>
+<div ng-controller="showGraphsController">
+        <select class="form-control">
+                <option ng-repeat= "sba in selectBoxArray" value="sba">{{sba}}</option>
+        </select>
+<!-- <input type="submit" ng-click="onSubmit()" value="Add"> -->
+<br>
+<div style="text-align: center"><button ng-click="onSubmit()" class="btn btn-success">Search</button></div>
+
+<canvas id="myChart1"></canvas>
+<canvas id="myChart2"></canvas>
+<canvas id="myChart3"></canvas>
+
+</div>

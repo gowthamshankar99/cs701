@@ -1,0 +1,15 @@
+<br>
+
+<div style="text-align:center">
+<nav class="navbar navbar-dark bg-dark" style="color: white;">
+        <!-- Navbar content -->
+        Remove Tickers from watchlist
+</nav>
+</div>
+<div ng-controller="removeTickerController">
+<input type="text" placeholder="Ticker Name. For Example AAPL" ng-model="removeTickerValue" class="form-control">
+<!-- <input type="submit" ng-click="onSubmit()" value="Remove"> --> 
+<br>
+<div style="text-align: center"><button type="submit" ng-click="onSubmit()" class="btn btn-danger">Remove</button></div>
+<div class="container" ng-class="'alert-' + (alert.type || 'danger')" uib-alert type="sucess" close="closeAlert()" ng-if="show" dismiss-on-timeout="3000">Successfully removed {{stockDump3}} from the watchlist.</div>
+</div>

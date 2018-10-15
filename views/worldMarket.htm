@@ -1,0 +1,33 @@
+<script>
+    function myMap() {
+        
+    var mapProp= {
+        center:new google.maps.LatLng(37.4419,-122.1419),
+        zoom:5,
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  }
+</script>
+<div>
+
+
+<table class="table">
+
+    <thead class="thead-dark">
+        <th></th>
+        <th>Market</th>
+        <th>Market Identification Code</th>
+    </thead>
+    <tbody>
+        <tr ng-repeat="wd in worldmarketdata">
+            <td></td>
+            <td>{{wd.Market}}</td>
+            <td>{{wd.MarketIdentificationCode}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV60QYB574oNjTBoPCIeEjwdbFJW5TaFg&callback=myMap"></script>
+
+</div>

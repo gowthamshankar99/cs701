@@ -1,0 +1,32 @@
+<br>
+
+<div style="text-align:center">
+<nav class="navbar navbar-dark bg-dark" style="color: white;">
+        <!-- Navbar content -->
+        Show Tickers
+</nav>
+</div>
+<div ng-controller="showTickers">
+<div style="float:right"></div>
+<button style="width:100%;display:block;" ng-click="refresh()" class="btn btn-danger">Refresh</button>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>Ticker Names</th>
+            <th>Price</th>
+            <th>Volume</th>
+            <th>Low</th>
+            <th>High</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="so in stockDetails | orderBy : 'so.shortName'">
+            <td>{{so.shortName}}</td>
+            <td>{{so.financeData.ask | currency}}</td>
+            <td>{{so.financeData.volume}}</td>
+            <td>{{so.financeData.low | currency}}</td>
+            <td>{{so.financeData.high | currency}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>

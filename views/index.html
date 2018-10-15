@@ -1,0 +1,190 @@
+<html ng-app="myApp">
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="/app.js"></script>
+    <link href="/main.css" rel="stylesheet">
+    
+<script>
+function dropHandler(ev) {
+  console.log('File(s) dropped!!');
+
+
+  // Prevent default behavior (Prevent file from being opened)
+  ev.preventDefault();
+    
+  if (ev.dataTransfer.items) {
+    // Use DataTransferItemList interface to access the file(s)
+    for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+      // If dropped items aren't files, reject them
+      if (ev.dataTransfer.items[i].kind === 'file') {
+        var file = ev.dataTransfer.items[i].getAsFile();
+        //console.log(typeof file);
+        //console.log(ev.dataTransfer.items[i].kind);
+        //console.log('... file[' + i + '].name = ' + file.name);
+        //console.log(ev.dataTransfer.getData(file.name));
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          var newDataArray = [];
+            //console.log("@@ " + event.target.result);
+            let fileContents = event.target.result.split("\n");
+            //console.log(fileContents[0]);
+            if(fileContents[0].trim() != "Ticker,PurchaseAmount,Shares") {
+                alert("The file contents cannot be imported! Contents don't match the format!")
+            }
+            else
+            {
+                // the content is good!
+                if(localStorage.getItem("portfolioData") != null)
+                {
+                     
+                    // The Existing Localstorage values needs to be taken into consideration too...
+
+                    let existingLocalStorageValues = localStorage.getItem("portfolioData");
+                    // convert into objects
+                    let existingLocalStorageValuesObjects = JSON.parse(existingLocalStorageValues);
+
+                    // iterate through the exisitng array and add it to the newDataArray
+
+                    for(let i=0;i<existingLocalStorageValuesObjects.length;i++)
+                    {
+                      newDataArray.push(existingLocalStorageValuesObjects[i]);
+                    }
+
+                    for(let i=1;i<fileContents.length;i++)
+                    {
+                        // check if the stock values are already existing in the localstorage
+                        //alert(JSON.stringify(newDataArray.find(function(element) {
+                        //  return element.name == fileContents[i].split(",")[0];
+                        //})));
+                        if(newDataArray.find(function(element) {
+                          return element.name == fileContents[i].split(",")[0];
+                        }))
+                        {
+                          // found a match already in localstorage. add the count.
+                          //     alert("not undefined");
+                               for(let k=0;k<newDataArray.length;k++)
+                               {
+                                   console.log("split issue " + fileContents[i]);
+                                   if(newDataArray[k].name == fileContents[i].split(",")[0])
+                                   {
+                                      newDataArray[k].shares = parseInt(newDataArray[k].shares) + parseInt(fileContents[i].split(",")[2]);
+                                   }
+                               }
+
+                        }
+                        else
+                        {
+                          var newData = {};
+                          console.log(fileContents[i]);
+                          // set the object
+                          newData.name = fileContents[i].split(",")[0];
+                          newData.sharePrice = fileContents[i].split(",")[1];
+                          newData.shares = fileContents[i].split(",")[2];
+                          newDataArray.push(newData);
+                        }
+
+
+                    }
+
+                    localStorage.setItem("portfolioData",JSON.stringify(newDataArray));
+                    location.reload();
+                }
+                else{
+                    // get the contents of the file
+                    
+
+                    for(let i=1;i<fileContents.length;i++)
+                    {
+                      var newData = {};
+                        console.log(fileContents[i]);
+                        // set the object
+                        newData.name = fileContents[i].split(",")[0];
+                        newData.sharePrice = fileContents[i].split(",")[1];
+                        newData.shares = fileContents[i].split(",")[2];
+                        newDataArray.push(newData);
+
+                    }
+
+
+                    // create the local storage
+                    localStorage.setItem("portfolioData",JSON.stringify(newDataArray));
+
+                   // Data loaded in to the local storage, hit the refresh button to refresh the table
+                   alert('Data loaded in to the local storage, hit the refresh button to refresh the table');
+                   location.reload();
+                   alert("ss");
+
+                }
+
+            }
+        }
+
+        reader.readAsText(file);
+      }
+    }
+  } else {
+    // Use DataTransfer interface to access the file(s)
+    for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+      console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+    }
+  } 
+  
+  // Pass event to removeDragData for cleanup
+  removeDragData(ev)
+}
+
+function dragOverHandler(ev) {
+  console.log('File(s) in drop zone'); 
+
+  // Prevent default behavior (Prevent file from being opened)
+  ev.preventDefault();
+}
+
+function removeDragData(ev) {
+  console.log('Removing drag data');
+
+  if (ev.dataTransfer.items) {
+    // Use DataTransferItemList interface to remove the drag data
+    ev.dataTransfer.items.clear();
+  } else {
+    // Use DataTransfer interface to remove the drag data
+    ev.dataTransfer.clearData();
+  }
+
+
+}    
+</script>
+
+
+</head>
+
+<body>
+        <nav class="navbar navbar-dark bg-dark">
+                <span style="color:white;font-size: 20px;cursor: pointer">Stock Market Portfolio</span>
+                <a href="#/!" style="color: white">Main</a>
+                <a href="/#!/addTicker"  style="color: white">Add Ticker</a>
+                <a href="/#!/removeTicker"  style="color: white">Remove Ticker</a>
+                <a href="/#!/showTickers"  style="color: white">Watchlist</a>
+                <a href="/#!/showGraphs"  style="color: white">show Graphs</a>
+                <a href="/#!/portfolio"  style="color: white">Portfolio</a>
+                <a href="/#!/getFeeds"  style="color: white">Get Feeds</a>
+                <a href="/#!/worldMarket"  style="color: white">World Market</a>
+        </nav>
+    <div ng-view></div>
+    <br>
+    <br>
+    <div id="googleMap" style="width:100%;height:400px;"></div>
+
+</body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV60QYB574oNjTBoPCIeEjwdbFJW5TaFg&callback=myMap" ></script>
+</html> 

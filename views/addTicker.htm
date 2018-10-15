@@ -1,0 +1,16 @@
+<br>
+
+<div style="text-align:center">
+<nav class="navbar navbar-dark bg-dark" style="color: white;">
+        <!-- Navbar content -->
+        Add Tickers to watchlist
+</nav>
+</div>
+<div ng-controller="addTickerController">
+<input type="text"  placeholder="Ticker Name. For Example AAPL" ng-model="addTickerValue" class="form-control" >
+<!-- <input type="submit" ng-click="onSubmit()" value="Add"> -->
+<br>
+<div style="text-align: center"><button ng-click="onSubmit()" class="btn btn-success">Add</button></div>
+
+<div class="container" ng-class="'alert-' + (alert.type || 'success')" uib-alert type="sucess" close="closeAlert()" ng-if="show" dismiss-on-timeout="3000">Successfully added {{stockDump2}} to the watchlist.</div>
+</div>

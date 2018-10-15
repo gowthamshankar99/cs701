@@ -1,0 +1,20 @@
+<br>
+
+<div style="text-align:center">
+<nav class="navbar navbar-dark bg-dark" style="color: white;">
+        <!-- Navbar content -->
+        Get Feeds - Get Latest News about your favorite Tickers
+</nav>
+</div>
+<div ng-controller="getFeedsController">
+<input type="text"  placeholder="Ticker Name. For Example AAPL" ng-model="searchTickerValue" class="form-control" >
+<!-- <input type="submit" ng-click="onSubmit()" value="Add"> -->
+<br>
+<div style="text-align: center"><button type="submit" ng-click="onSubmitSearch()" class="btn btn-success">Search</button></div>
+
+<div ng-repeat=" sam in sample2">
+
+<p>{{sam.text}}</p>
+<hr>
+</div>
+
