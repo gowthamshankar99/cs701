@@ -190,7 +190,7 @@ app.controller("showTickers",function($scope,$http) {
                 method: 'get',
                 headers : {
                     "Content-Type":"application/json",
-                    "X-Mashape-Key" : "4B5APBMEQVmshPhOG6gHcc4bELr6p1z8wQgjsnczgNTYuQPwpx",
+                    "X-Mashape-Key" : "6d58c64d97mshc432e7d010d76b4p1c1e3djsnad9212352000",
                     "X-Mashape-Host" : "adakadavra-smarket.p.mashape.com"
                 },
                 url: path
@@ -224,7 +224,7 @@ app.controller("showTickers",function($scope,$http) {
                     method: 'get',
                     headers : {
                         "Content-Type":"application/json",
-                        "X-Mashape-Key" : "4B5APBMEQVmshPhOG6gHcc4bELr6p1z8wQgjsnczgNTYuQPwpx",
+                        "X-Mashape-Key" : "6d58c64d97mshc432e7d010d76b4p1c1e3djsnad9212352000",
                         "X-Mashape-Host" : "adakadavra-smarket.p.mashape.com"
                     },
                     url: path
@@ -401,6 +401,7 @@ app.controller('portfolioController',function($scope,$http) {
   let portfolioDataString = localStorage.getItem('portfolioData');
   //$scope.portfolioDataPush = JSON.parse(portfolioDataString);
   $scope.portfolioDataPushTest = JSON.parse(portfolioDataString);
+  console.log($scope.portfolioDataPushTest);
   $scope.portfolioDataPush = portfolioLocalStorageData($scope.portfolioDataPushTest);
 
   $scope.refresh = function() {
@@ -423,6 +424,7 @@ app.controller('portfolioController',function($scope,$http) {
   // Call the API to get the data
       function portfolioLocalStorageData(inputData) {
       // loop through the array
+      console.log(portfolioLocalStorageData);
       for(let i=0;i<inputData.length;i++)
       {       
           var path = "https://adakadavra-smarket.p.mashape.com/api/v1/public/quote/" + inputData[i].name;
@@ -430,7 +432,7 @@ app.controller('portfolioController',function($scope,$http) {
                   method: 'get',
                   headers : {
                       "Content-Type":"application/json",
-                      "X-Mashape-Key" : "4B5APBMEQVmshPhOG6gHcc4bELr6p1z8wQgjsnczgNTYuQPwpx",
+                      "X-Mashape-Key" : "6d58c64d97mshc432e7d010d76b4p1c1e3djsnad9212352000",
                       "X-Mashape-Host" : "adakadavra-smarket.p.mashape.com"
                   },
                   url: path
